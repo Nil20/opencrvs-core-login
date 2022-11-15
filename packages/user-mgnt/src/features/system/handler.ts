@@ -26,22 +26,28 @@ import {
   createFhirPractitionerRole,
   postFhir
 } from '@user-mgnt/features/createUser/service'
+import { pick } from 'lodash'
+import { Types } from 'mongoose'
+
+type SystemType = 'HEALTH' | 'RECORD_SEARCH' | 'NATIONAL_ID'
 
 interface IRegisterSystemPayload {
   name: string
-  settings: {
-    dailyQuota: number
+  type: SystemType
+  settings?: {
+    dailyQuota?: number
   }
-  type: string
 }
 
-interface IRegisterSystemResponse {
-  client_id: string
-  client_secret: string
-  sha_secret: string
-}
+/** Returns a curated System with only the params we want to expose */
+const pickSystem = (system: ISystemModel & { _id: Types.ObjectId }) => ({
+  ...pick(system, ['_id', 'name', 'status', 'type']),
+  // TODO: client_id and sha_secret should be camelCased in the Mongoose-model
+  shaSecret: system.sha_secret,
+  clientId: system.client_id
+})
 
-export async function registerSystemClient(
+export async function registerSystem(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
@@ -79,10 +85,10 @@ export async function registerSystemClient(
     }
 
     const client_id = uuid()
-    const secret_id = uuid()
+    const clientSecret = uuid()
     const sha_secret = uuid()
 
-    const { hash, salt } = generateSaltedHash(secret_id)
+    const { hash, salt } = generateSaltedHash(clientSecret)
 
     const practitioner = createFhirPractitioner(systemAdminUser, true)
     const practitionerId = await postFhir(
@@ -105,7 +111,7 @@ export async function registerSystemClient(
         'PractitionerRole resource not saved correctly, practitionerRole ID not returned'
       )
     }
-    const system = {
+    const systemDetails = {
       client_id,
       name: name || systemAdminUser.username,
       createdBy: userId,
@@ -119,13 +125,15 @@ export async function registerSystemClient(
       settings,
       type
     }
-    await System.create(system)
-    const response: IRegisterSystemResponse = {
-      client_id,
-      client_secret: secret_id,
-      sha_secret
-    }
-    return h.response(response).code(201)
+    const newSystem = await System.create(systemDetails)
+
+    return h
+      .response({
+        // NOTE! Client secret is visible for only this response and then forever gone
+        clientSecret,
+        system: pickSystem(newSystem)
+      })
+      .code(201)
   } catch (err) {
     logger.error(err)
     // return 400 if there is a validation error when saving to mongo
@@ -151,7 +159,7 @@ interface IAuditSystemPayload {
   client_id: string
 }
 
-export async function deactivateSystemClient(
+export async function deactivateSystem(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
@@ -197,7 +205,7 @@ export async function deactivateSystemClient(
   }
 }
 
-export async function reactivateSystemClient(
+export async function reactivateSystem(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
@@ -332,16 +340,8 @@ export async function getSystemHandler(
 }
 
 export async function getAllSystemsHandler() {
-  const systems: ISystemModel[] = await System.find()
-
-  return systems.map((system) => {
-    return {
-      client_id: system.client_id,
-      name: system.name,
-      sha_secret: system.sha_secret,
-      status: system.status
-    }
-  })
+  const systems = await System.find()
+  return systems.map((system) => pickSystem(system))
 }
 
 export const getSystemRequestSchema = Joi.object({
