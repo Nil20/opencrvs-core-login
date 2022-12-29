@@ -51,6 +51,13 @@ import {
   createFormDatasetHandler,
   getFormDatasetHandler
 } from '@config/handlers/formDataset/handler'
+import getInformantSMSNotification from '@config/handlers/informantSMSNotification/getInformantSMSNotification/handler'
+import updateInformantSMSNotification, {
+  requestSchema as updateInformantSMSNotificationSchema
+} from '@config/handlers/informantSMSNotification/updateInformantSMSNotification/handler'
+import createInformantSMSNotification, {
+  requestSchema as createInformantSMSNotificationSchema
+} from '@config/handlers/informantSMSNotification/createSMSNotification/handler'
 
 export const enum RouteScope {
   DECLARE = 'declare',
@@ -348,6 +355,54 @@ export default function getRoutes() {
         validate: {
           payload: formDatasetSchema
         }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/informantSMSNotification',
+      handler: getInformantSMSNotification,
+      config: {
+        tags: ['api'],
+        description: 'Get Informant SMS Notification',
+        auth: {
+          scope: [
+            RouteScope.NATLSYSADMIN,
+            RouteScope.DECLARE,
+            RouteScope.CERTIFY,
+            RouteScope.REGISTER,
+            RouteScope.VALIDATE
+          ]
+        }
+      }
+    },
+    {
+      method: 'PUT',
+      path: '/informantSMSNotification',
+      handler: updateInformantSMSNotification,
+      config: {
+        tags: ['api'],
+        description: 'Update Informant SMS Notification',
+        auth: {
+          scope: [RouteScope.NATLSYSADMIN]
+        }
+      },
+      validate: {
+        payload: updateInformantSMSNotificationSchema
+      }
+    },
+    {
+      method: 'POST',
+      path: '/informantSMSNotification',
+      handler: createInformantSMSNotification,
+      config: {
+        tags: ['api'],
+        description: 'Update Informant SMS Notification',
+        auth: {
+          scope: [RouteScope.NATLSYSADMIN]
+        }
+      },
+      validate: {
+        payload: createInformantSMSNotificationSchema
       }
     }
   ]

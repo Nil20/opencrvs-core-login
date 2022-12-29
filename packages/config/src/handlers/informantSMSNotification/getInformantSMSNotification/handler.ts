@@ -16,7 +16,7 @@ import InformantSMSNotification, {
   IInformantSMSNotificationsModel
 } from '@config/models/informantSMSNotification'
 
-export async function getInformantSMSNotification(
+export default async function getInformantSMSNotification(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
