@@ -40,24 +40,23 @@ import {
   modifyDraftStatusHandler,
   requestSchema as modifyFormDraftReqSchema
 } from '@config/handlers/formDraft/updateFormDraft/handler'
-
 import getFormDrafts from '@config/handlers/formDraft/getFormDrafts/handler'
 import {
   deleteFormDraftHandler,
   requestSchema as deleteFormDraftReqSchema
 } from '@config/handlers/formDraft/deleteFormDraft/handler'
+import createInformantSMSNotificationHandler, {
+  requestSchema as createInformantSMSNotificationReqSchema
+} from '@config/handlers/informantSMSNotification/createSMSNotification/handler'
+import getInformantSMSNotificationsHandler from '@config/handlers/informantSMSNotification/getInformantSMSNotification/handler'
+import updateInformantSMSNotificationHandler, {
+  requestSchema as updateInformantSMSNotificationReqSchema
+} from '@config/handlers/informantSMSNotification/updateInformantSMSNotification/handler'
 import getSystems from '@config/handlers/system/systemHandler'
 import {
   createFormDatasetHandler,
   getFormDatasetHandler
 } from '@config/handlers/formDataset/handler'
-import getInformantSMSNotification from '@config/handlers/informantSMSNotification/getInformantSMSNotification/handler'
-import updateInformantSMSNotification, {
-  requestSchema as updateInformantSMSNotificationSchema
-} from '@config/handlers/informantSMSNotification/updateInformantSMSNotification/handler'
-import createInformantSMSNotification, {
-  requestSchema as createInformantSMSNotificationSchema
-} from '@config/handlers/informantSMSNotification/createSMSNotification/handler'
 
 export const enum RouteScope {
   DECLARE = 'declare',
@@ -358,18 +357,33 @@ export default function getRoutes() {
       }
     },
     {
-      method: 'GET',
+      method: 'POST',
       path: '/informantSMSNotification',
-      handler: getInformantSMSNotification,
+      handler: createInformantSMSNotificationHandler,
       config: {
         tags: ['api'],
-        description: 'Get Informant SMS Notification',
+        description: 'Creates informantSMSNotifications',
+        auth: {
+          scope: [RouteScope.NATLSYSADMIN]
+        },
+        validate: {
+          payload: createInformantSMSNotificationReqSchema
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/informantSMSNotification',
+      handler: getInformantSMSNotificationsHandler,
+      config: {
+        tags: ['api'],
+        description: 'Get informantSMSNotifications',
         auth: {
           scope: [
             RouteScope.NATLSYSADMIN,
             RouteScope.DECLARE,
-            RouteScope.CERTIFY,
             RouteScope.REGISTER,
+            RouteScope.CERTIFY,
             RouteScope.VALIDATE
           ]
         }
@@ -378,31 +392,16 @@ export default function getRoutes() {
     {
       method: 'PUT',
       path: '/informantSMSNotification',
-      handler: updateInformantSMSNotification,
+      handler: updateInformantSMSNotificationHandler,
       config: {
         tags: ['api'],
-        description: 'Update Informant SMS Notification',
+        description: 'Update informantSMSNotification',
         auth: {
           scope: [RouteScope.NATLSYSADMIN]
+        },
+        validate: {
+          payload: updateInformantSMSNotificationReqSchema
         }
-      },
-      validate: {
-        payload: updateInformantSMSNotificationSchema
-      }
-    },
-    {
-      method: 'POST',
-      path: '/informantSMSNotification',
-      handler: createInformantSMSNotification,
-      config: {
-        tags: ['api'],
-        description: 'Update Informant SMS Notification',
-        auth: {
-          scope: [RouteScope.NATLSYSADMIN]
-        }
-      },
-      validate: {
-        payload: createInformantSMSNotificationSchema
       }
     }
   ]
