@@ -24,6 +24,8 @@ export default async function getInformantSMSNotification(
 
   try {
     informantSMSNotifications = await InformantSMSNotification.find().exec()
+
+    console.log('informantSMSNotifications', informantSMSNotifications)
   } catch (error) {
     throw internal(error.message)
   }

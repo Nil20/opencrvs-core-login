@@ -47,6 +47,8 @@ import { GraphQLSchema } from 'graphql'
 import { IResolvers } from 'graphql-tools'
 import { merge, isEqual, uniqueId } from 'lodash'
 import { certificateTypeResolvers } from '@gateway/features/certificate/type-resolvers'
+import { resolvers as informantSMSNotificationResolvers } from '@gateway/features/informantSMSNotification/root-resolver'
+import { informantSMSNotiTypeResolver } from '@gateway/features/informantSMSNotification/type-resolver'
 
 const graphQLSchemaPath = `${__dirname}/schema.graphql`
 
@@ -78,7 +80,9 @@ const resolvers: StringIndexed<IResolvers> = merge(
   integrationResolver as IResolvers,
   formDatasetResolvers as IResolvers,
   bookmarkAdvancedSearchResolvers as IResolvers,
-  formDatasetResolvers as IResolvers
+  formDatasetResolvers as IResolvers,
+  informantSMSNotificationResolvers as IResolvers,
+  informantSMSNotiTypeResolver as IResolvers
 )
 
 export const getExecutableSchema = (): GraphQLSchema => {
