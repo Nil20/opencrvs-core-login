@@ -149,7 +149,7 @@ type Query {
   getFormDraft: [FormDraft!]
   fetchSystem(clientId: ID!): System
   getFormDataset: [FormDataset!]
-  informantSMSNotifications: [SMSNotification]
+  informantSMSNotifications: [SMSNotification!]
 }
 
 type Mutation {

@@ -24,7 +24,7 @@ input SMSNotificationInput {
 }
 
 type Query {
-  informantSMSNotifications: [SMSNotification]
+  informantSMSNotifications: [SMSNotification!]
 }
 
 type Mutation {

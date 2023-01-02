@@ -52,7 +52,7 @@ export interface GQLQuery {
   getFormDraft?: Array<GQLFormDraft>
   fetchSystem?: GQLSystem
   getFormDataset?: Array<GQLFormDataset>
-  informantSMSNotifications?: Array<GQLSMSNotification | null>
+  informantSMSNotifications?: Array<GQLSMSNotification>
 }
 
 export interface GQLMutation {
