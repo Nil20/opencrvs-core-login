@@ -96,7 +96,7 @@ export const resolvers: GQLResolver = {
   },
 
   Mutation: {
-    async toggleInformantSMSNotification(_, { smsNotification }, authHeader) {
+    async toggleInformantSMSNotification(_, { smsNotifications }, authHeader) {
       if (!hasScope(authHeader, 'natlsysadmin')) {
         return await Promise.reject(
           new Error(
@@ -111,7 +111,7 @@ export const resolvers: GQLResolver = {
 
       const res = await fetch(informantSMSNotificationURL, {
         method: 'PUT',
-        body: JSON.stringify(smsNotification),
+        body: JSON.stringify(smsNotifications),
         headers: {
           'Content-type': 'application/json',
           ...authHeader

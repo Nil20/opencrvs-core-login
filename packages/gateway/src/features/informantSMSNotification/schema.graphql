@@ -13,7 +13,7 @@ type SMSNotification {
   name: String!
   message: String!
   enabled: Boolean!
-  updateAt: String!
+  updatedAt: String!
   createdAt: String!
 }
 
@@ -29,6 +29,6 @@ type Query {
 
 type Mutation {
   toggleInformantSMSNotification(
-    smsNotification: [SMSNotificationInput!]
+    smsNotifications: [SMSNotificationInput!]
   ): [SMSNotification!]
 }

@@ -1372,7 +1372,7 @@ export type MutationResetPasswordSmsArgs = {
 }
 
 export type MutationToggleInformantSmsNotificationArgs = {
-  smsNotification?: InputMaybe<Array<SmsNotificationInput>>
+  smsNotifications?: InputMaybe<Array<SmsNotificationInput>>
 }
 
 export type MutationUpdateApplicationConfigArgs = {
@@ -1984,7 +1984,7 @@ export type SmsNotification = {
   id?: Maybe<Scalars['String']>
   message: Scalars['String']
   name: Scalars['String']
-  updateAt: Scalars['String']
+  updatedAt: Scalars['String']
 }
 
 export type SmsNotificationInput = {
@@ -5861,6 +5861,25 @@ export type DeleteSystemMutation = {
   } | null
 }
 
+export type ToggleInformantSmsNotificationMutationVariables = Exact<{
+  smsNotifications?: InputMaybe<
+    Array<SmsNotificationInput> | SmsNotificationInput
+  >
+}>
+
+export type ToggleInformantSmsNotificationMutation = {
+  __typename?: 'Mutation'
+  toggleInformantSMSNotification?: Array<{
+    __typename?: 'SMSNotification'
+    id?: string | null
+    name: string
+    enabled: boolean
+    message: string
+    createdAt: string
+    updatedAt: string
+  }> | null
+}
+
 export type GetInformantSmsNotificationsQueryVariables = Exact<{
   [key: string]: never
 }>
@@ -5873,6 +5892,8 @@ export type GetInformantSmsNotificationsQuery = {
     name: string
     enabled: boolean
     message: string
+    createdAt: string
+    updatedAt: string
   }> | null
 }
 

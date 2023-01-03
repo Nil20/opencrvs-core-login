@@ -242,7 +242,7 @@ type Mutation {
   ): BookMarkedSearches
   createFormDataset(formDataset: FormDatasetInput!): FormDatasetResponse
   toggleInformantSMSNotification(
-    smsNotification: [SMSNotificationInput!]
+    smsNotifications: [SMSNotificationInput!]
   ): [SMSNotification!]
 }
 
@@ -604,7 +604,7 @@ type SMSNotification {
   name: String!
   message: String!
   enabled: Boolean!
-  updateAt: String!
+  updatedAt: String!
   createdAt: String!
 }
 

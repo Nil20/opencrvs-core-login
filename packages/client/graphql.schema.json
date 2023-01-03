@@ -11455,7 +11455,7 @@
             "description": null,
             "args": [
               {
-                "name": "smsNotification",
+                "name": "smsNotifications",
                 "description": null,
                 "type": {
                   "kind": "LIST",
@@ -16959,7 +16959,7 @@
             "deprecationReason": null
           },
           {
-            "name": "updateAt",
+            "name": "updatedAt",
             "description": null,
             "args": [],
             "type": {

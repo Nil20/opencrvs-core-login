@@ -485,7 +485,7 @@ export interface GQLSMSNotification {
   name: string
   message: string
   enabled: boolean
-  updateAt: string
+  updatedAt: string
   createdAt: string
 }
 
@@ -3239,7 +3239,7 @@ export interface MutationToCreateFormDatasetResolver<
 }
 
 export interface MutationToToggleInformantSMSNotificationArgs {
-  smsNotification?: Array<GQLSMSNotificationInput>
+  smsNotifications?: Array<GQLSMSNotificationInput>
 }
 export interface MutationToToggleInformantSMSNotificationResolver<
   TParent = any,
@@ -4552,7 +4552,7 @@ export interface GQLSMSNotificationTypeResolver<TParent = any> {
   name?: SMSNotificationToNameResolver<TParent>
   message?: SMSNotificationToMessageResolver<TParent>
   enabled?: SMSNotificationToEnabledResolver<TParent>
-  updateAt?: SMSNotificationToUpdateAtResolver<TParent>
+  updatedAt?: SMSNotificationToUpdatedAtResolver<TParent>
   createdAt?: SMSNotificationToCreatedAtResolver<TParent>
 }
 
@@ -4578,7 +4578,7 @@ export interface SMSNotificationToEnabledResolver<
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult
 }
 
-export interface SMSNotificationToUpdateAtResolver<
+export interface SMSNotificationToUpdatedAtResolver<
   TParent = any,
   TResult = any
 > {

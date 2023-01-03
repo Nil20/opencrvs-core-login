@@ -64,7 +64,10 @@ export default async function updateInformantSMSNotification(
       return h.response(`Failed to update existing question. ${err}`).code(400)
     }
 
-    const informantSMSNotification = getInformantSMSNotification(request, h)
+    const informantSMSNotification = await getInformantSMSNotification(
+      request,
+      h
+    )
     return h.response(informantSMSNotification).code(201)
   } catch (err) {
     logger.error(err)
