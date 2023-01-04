@@ -90,10 +90,10 @@ export const WORKQUEUE_TABS = {
   certificate: 'certificate',
   systems: 'integration',
   settings: 'settings',
-  logout: 'logout',
   declarationForms: 'form',
+  logout: 'logout',
   communications: 'communications',
-  informantNotification: 'informantNotification'
+  informantNotification: 'informantnotification'
 } as const
 
 const GROUP_ID = {
@@ -311,9 +311,9 @@ export const NavigationView = (props: IFullProps) => {
     WORKQUEUE_TABS.declarationForms,
     WORKQUEUE_TABS.systems
   ]
-  const communicationTab: string[] = [WORKQUEUE_TABS.informantNotification]
+  const conmmunicationTab: string[] = [WORKQUEUE_TABS.informantNotification]
   const [isConfigExpanded, setIsConfigExpanded] = React.useState(false)
-  const [isCommunicationTabExpanded, setCommunicationTabExpanded] =
+  const [isCommunationExpanded, setIsCommunationExpanded] =
     React.useState(false)
 
   const { data, initialSyncDone } = workqueue
@@ -436,6 +436,9 @@ export const NavigationView = (props: IFullProps) => {
               }}
             />
           </NavigationGroup>
+          {menuCollapse && (
+            <NavigationGroup>{getSettingsAndLogout(props)}</NavigationGroup>
+          )}
         </>
       ) : (
         <>
@@ -712,31 +715,29 @@ export const NavigationView = (props: IFullProps) => {
                   ) && (
                     <>
                       <NavigationItem
-                        icon={() => <Icon name="Compass" size="small" />}
+                        icon={() => <Icon name="MessageCircle" size="small" />}
                         id={`navigation_${WORKQUEUE_TABS.communications}_main`}
                         label={intl.formatMessage(
                           navigationMessages[WORKQUEUE_TABS.communications]
                         )}
-                        onClick={() => {
-                          setCommunicationTabExpanded(
-                            !isCommunicationTabExpanded
-                          )
-                        }}
+                        onClick={() =>
+                          setIsCommunationExpanded(!isCommunationExpanded)
+                        }
                         isSelected={
                           enableMenuSelection &&
-                          communicationTab.includes(activeMenuItem)
+                          conmmunicationTab.includes(activeMenuItem)
                         }
                         expandableIcon={() =>
-                          isConfigExpanded ||
-                          communicationTab.includes(activeMenuItem) ? (
+                          isCommunationExpanded ||
+                          conmmunicationTab.includes(activeMenuItem) ? (
                             <Expandable selected={true} />
                           ) : (
                             <Expandable />
                           )
                         }
                       />
-                      {(isCommunicationTabExpanded ||
-                        communicationTab.includes(activeMenuItem)) && (
+                      {(isCommunationExpanded ||
+                        conmmunicationTab.includes(activeMenuItem)) && (
                         <>
                           <NavigationSubItem
                             label={intl.formatMessage(
@@ -796,9 +797,6 @@ export const NavigationView = (props: IFullProps) => {
       ) : (
         <></>
       )}
-      <NavigationGroup>
-        {menuCollapse && getSettingsAndLogout(props)}
-      </NavigationGroup>
     </LeftNavigation>
   )
 }
@@ -874,4 +872,3 @@ export const Navigation = connect<
 export const FixedNavigation = styled(Navigation)`
   position: fixed;
 `
-//abcd

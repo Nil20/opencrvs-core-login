@@ -30,7 +30,7 @@ interface INavigationMessages
   form: MessageDescriptor
   integration: MessageDescriptor
   communications: MessageDescriptor
-  informantnotification: MessageDescriptor
+  informantNotification: MessageDescriptor
   outbox: MessageDescriptor
 }
 
@@ -120,7 +120,7 @@ const messagesToDefine: INavigationMessages = {
     description: 'Communications label in navigation',
     id: 'navigation.communications'
   },
-  informantnotification: {
+  informantNotification: {
     defaultMessage: 'Informant notifications',
     description: 'Informant notifications label in navigation',
     id: 'navigation.informantNotification'
