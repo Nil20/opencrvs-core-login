@@ -39,15 +39,33 @@ export default async function updateInformantSMSNotification(
     }
 
     const modifiedInformantSMSNotification =
-      existingInformantSMSNotification.filter((informantSMSNotification) => {
-        const hasModified = informantSMSNotificationPayload.find((inftNoti) => {
-          String(inftNoti._id) === String(informantSMSNotification.id) &&
-            (inftNoti.name !== informantSMSNotification.name ||
-              inftNoti.enabled !== informantSMSNotification.enabled)
-        })
-
+      informantSMSNotificationPayload.filter((informantSMSNotification) => {
+        const hasModified = existingInformantSMSNotification.find(
+          (inftNoti) => {
+            // console.log('inft', inftNoti._id, inftNoti.name)
+            return (
+              String(inftNoti._id) === String(informantSMSNotification.id) &&
+              (inftNoti.name !== informantSMSNotification.name ||
+                inftNoti.enabled !== informantSMSNotification.enabled)
+            )
+          }
+        )
         return hasModified
       })
+
+    // const modifiedInformantSMSNotification =
+    //   informantSMSNotificationPayload.filter((informantSMSNotification) => {
+    //     const hasModified = existingInformantSMSNotification.find(
+    //       (inftNoti) =>
+    //         String(inftNoti._id) === String(informantSMSNotification.id) &&
+    //         (inftNoti.name !== informantSMSNotification.name ||
+    //           inftNoti.enabled !== informantSMSNotification.enabled)
+    //     )
+
+    //     return hasModified
+    //   })
+
+    console.log('abcdefgh', modifiedInformantSMSNotification)
 
     try {
       await Promise.all(
