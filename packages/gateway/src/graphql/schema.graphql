@@ -717,6 +717,7 @@ type ApplicationConfiguration {
   APPLICATION_NAME: String
   BIRTH: Birth
   COUNTRY_LOGO: CountryLogo
+  LOGIN_BACKGROUND: LoginBackground
   CURRENCY: Currency
   DEATH: Death
   FIELD_AGENT_AUDIT_LOCATIONS: String
@@ -732,6 +733,7 @@ input ApplicationConfigurationInput {
   APPLICATION_NAME: String
   BIRTH: BirthInput
   COUNTRY_LOGO: CountryLogoInput
+  LOGIN_BACKGROUND_INPUT: LoginBackgroundInput
   CURRENCY: CurrencyInput
   DEATH: DeathInput
   FIELD_AGENT_AUDIT_LOCATIONS: String
@@ -1272,6 +1274,12 @@ type CountryLogo {
   file: String
 }
 
+type LoginBackground {
+  backgroundColor: String
+  backgroundImage: String
+  imageFit: ImageFit
+}
+
 type Currency {
   isoCode: String
   languagesAndCountry: [String]
@@ -1291,6 +1299,12 @@ input BirthInput {
 input CountryLogoInput {
   fileName: String
   file: String
+}
+
+input LoginBackgroundInput {
+  backgroundColor: String
+  backgroundImage: String
+  imageFit: ImageFit
 }
 
 input CurrencyInput {
@@ -1711,6 +1725,11 @@ type BirthFee {
   ON_TIME: Float
   LATE: Float
   DELAYED: Float
+}
+
+enum ImageFit {
+  FILL
+  TILE
 }
 
 type DeathFee {

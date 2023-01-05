@@ -598,6 +598,7 @@ export interface GQLApplicationConfiguration {
   APPLICATION_NAME?: string
   BIRTH?: GQLBirth
   COUNTRY_LOGO?: GQLCountryLogo
+  LOGIN_BACKGROUND?: GQLLoginBackground
   CURRENCY?: GQLCurrency
   DEATH?: GQLDeath
   FIELD_AGENT_AUDIT_LOCATIONS?: string
@@ -613,6 +614,7 @@ export interface GQLApplicationConfigurationInput {
   APPLICATION_NAME?: string
   BIRTH?: GQLBirthInput
   COUNTRY_LOGO?: GQLCountryLogoInput
+  LOGIN_BACKGROUND_INPUT?: GQLLoginBackgroundInput
   CURRENCY?: GQLCurrencyInput
   DEATH?: GQLDeathInput
   FIELD_AGENT_AUDIT_LOCATIONS?: string
@@ -1175,6 +1177,12 @@ export interface GQLCountryLogo {
   file?: string
 }
 
+export interface GQLLoginBackground {
+  backgroundColor?: string
+  backgroundImage?: string
+  imageFit?: GQLImageFit
+}
+
 export interface GQLCurrency {
   isoCode?: string
   languagesAndCountry?: Array<string | null>
@@ -1194,6 +1202,12 @@ export interface GQLBirthInput {
 export interface GQLCountryLogoInput {
   fileName?: string
   file?: string
+}
+
+export interface GQLLoginBackgroundInput {
+  backgroundColor?: string
+  backgroundImage?: string
+  imageFit?: GQLImageFit
 }
 
 export interface GQLCurrencyInput {
@@ -1617,6 +1631,11 @@ export interface GQLBirthFee {
   DELAYED?: number
 }
 
+export const enum GQLImageFit {
+  FILL = 'FILL',
+  TILE = 'TILE'
+}
+
 export interface GQLDeathFee {
   ON_TIME?: number
   DELAYED?: number
@@ -1833,6 +1852,7 @@ export interface GQLResolver {
   FormDatasetOption?: GQLFormDatasetOptionTypeResolver
   Birth?: GQLBirthTypeResolver
   CountryLogo?: GQLCountryLogoTypeResolver
+  LoginBackground?: GQLLoginBackgroundTypeResolver
   Currency?: GQLCurrencyTypeResolver
   Death?: GQLDeathTypeResolver
   AssignmentData?: GQLAssignmentDataTypeResolver
@@ -4652,6 +4672,7 @@ export interface GQLApplicationConfigurationTypeResolver<TParent = any> {
   APPLICATION_NAME?: ApplicationConfigurationToAPPLICATION_NAMEResolver<TParent>
   BIRTH?: ApplicationConfigurationToBIRTHResolver<TParent>
   COUNTRY_LOGO?: ApplicationConfigurationToCOUNTRY_LOGOResolver<TParent>
+  LOGIN_BACKGROUND?: ApplicationConfigurationToLOGIN_BACKGROUNDResolver<TParent>
   CURRENCY?: ApplicationConfigurationToCURRENCYResolver<TParent>
   DEATH?: ApplicationConfigurationToDEATHResolver<TParent>
   FIELD_AGENT_AUDIT_LOCATIONS?: ApplicationConfigurationToFIELD_AGENT_AUDIT_LOCATIONSResolver<TParent>
@@ -4678,6 +4699,13 @@ export interface ApplicationConfigurationToBIRTHResolver<
 }
 
 export interface ApplicationConfigurationToCOUNTRY_LOGOResolver<
+  TParent = any,
+  TResult = any
+> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult
+}
+
+export interface ApplicationConfigurationToLOGIN_BACKGROUNDResolver<
   TParent = any,
   TResult = any
 > {
@@ -5868,6 +5896,33 @@ export interface CountryLogoToFileNameResolver<TParent = any, TResult = any> {
 }
 
 export interface CountryLogoToFileResolver<TParent = any, TResult = any> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult
+}
+
+export interface GQLLoginBackgroundTypeResolver<TParent = any> {
+  backgroundColor?: LoginBackgroundToBackgroundColorResolver<TParent>
+  backgroundImage?: LoginBackgroundToBackgroundImageResolver<TParent>
+  imageFit?: LoginBackgroundToImageFitResolver<TParent>
+}
+
+export interface LoginBackgroundToBackgroundColorResolver<
+  TParent = any,
+  TResult = any
+> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult
+}
+
+export interface LoginBackgroundToBackgroundImageResolver<
+  TParent = any,
+  TResult = any
+> {
+  (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult
+}
+
+export interface LoginBackgroundToImageFitResolver<
+  TParent = any,
+  TResult = any
+> {
   (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult
 }
 

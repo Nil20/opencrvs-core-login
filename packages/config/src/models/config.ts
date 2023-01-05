@@ -35,10 +35,17 @@ interface ICountryLogo {
   fileName: string
   file: string
 }
+
+interface ILoginBackground {
+  backgroundColor: string
+  backgroundImage: string
+  imageFit: string
+}
 export interface IApplicationConfigurationModel extends Document {
   APPLICATION_NAME: string
   BIRTH: IBirth
   COUNTRY_LOGO: ICountryLogo
+  LOGIN_BACKGROUND: ILoginBackground
   CURRENCY: ICurrency
   DEATH: IDeath
   FIELD_AGENT_AUDIT_LOCATIONS: string
@@ -79,6 +86,12 @@ const currencySchema = new Schema<ICurrency>({
   languagesAndCountry: { type: [String] }
 })
 
+const loginBackgroundSchema = new Schema<ILoginBackground>({
+  backgroundColor: { type: String },
+  backgroundImage: { type: String },
+  imageFit: { type: String }
+})
+
 export interface Integration {
   name: string
   status: string
@@ -95,6 +108,7 @@ const systemSchema = new Schema({
   APPLICATION_NAME: { type: String, required: false, default: 'OpenCRVS' },
   BIRTH: { type: birthSchema, required: false },
   COUNTRY_LOGO: { type: countryLogoSchema, required: false },
+  LOGIN_BACKGROUND: { type: loginBackgroundSchema, required: false },
   CURRENCY: { type: currencySchema, required: false },
   DEATH: { type: deathSchema, required: false },
   FIELD_AGENT_AUDIT_LOCATIONS: {

@@ -14,7 +14,8 @@ import {
   GQLCurrencyInput,
   GQLDeathInput,
   GQLCountryLogoInput,
-  GQLResolver
+  GQLResolver,
+  GQLLoginBackgroundInput
 } from '@gateway/graphql/schema'
 import fetch from 'node-fetch'
 import { APPLICATION_CONFIG_URL } from '@gateway/constants'
@@ -47,7 +48,9 @@ export const resolvers: GQLResolver = {
         PHONE_NUMBER_PATTERN: applicationConfig.PHONE_NUMBER_PATTERN as string,
         NID_NUMBER_PATTERN: applicationConfig.NID_NUMBER_PATTERN as string,
         ADDRESSES: applicationConfig.ADDRESSES as number,
-        ADMIN_LEVELS: applicationConfig.ADMIN_LEVELS as number
+        ADMIN_LEVELS: applicationConfig.ADMIN_LEVELS as number,
+        LOGIN_BACKGROUND:
+          applicationConfig.LOGIN_BACKGROUND_INPUT as GQLLoginBackgroundInput
       }
 
       const res = await fetch(
@@ -69,7 +72,8 @@ export const resolvers: GQLResolver = {
           )
         )
       }
-      return await res.json()
+      const data = await res.json()
+      return data
     }
   }
 }

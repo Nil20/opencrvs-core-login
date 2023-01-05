@@ -14,13 +14,15 @@ import {
   GQLCurrencyInput,
   GQLBirthInput,
   GQLDeathInput,
-  GQLCountryLogoInput
+  GQLCountryLogoInput,
+  GQLLoginBackground
 } from '@gateway/graphql/schema'
 
 export interface IApplicationConfigPayload {
   APPLICATION_NAME: string
   BIRTH: GQLBirthInput
   COUNTRY_LOGO: GQLCountryLogoInput
+  LOGIN_BACKGROUND: GQLLoginBackground
   CURRENCY: GQLCurrencyInput
   DEATH: GQLDeathInput
   FIELD_AGENT_AUDIT_LOCATIONS: string

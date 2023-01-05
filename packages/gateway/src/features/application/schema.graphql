@@ -54,6 +54,17 @@ type Currency {
   languagesAndCountry: [String]
 }
 
+enum ImageFit {
+  FILL
+  TILE
+}
+
+type LoginBackground {
+  backgroundColor: String
+  backgroundImage: String
+  imageFit: ImageFit
+}
+
 input BirthFeeInput {
   ON_TIME: Float
   LATE: Float
@@ -97,10 +108,17 @@ input CurrencyInput {
   languagesAndCountry: [String]
 }
 
+input LoginBackgroundInput {
+  backgroundColor: String
+  backgroundImage: String
+  imageFit: ImageFit
+}
+
 input ApplicationConfigurationInput {
   APPLICATION_NAME: String
   BIRTH: BirthInput
   COUNTRY_LOGO: CountryLogoInput
+  LOGIN_BACKGROUND_INPUT: LoginBackgroundInput
   CURRENCY: CurrencyInput
   DEATH: DeathInput
   FIELD_AGENT_AUDIT_LOCATIONS: String
@@ -116,6 +134,7 @@ type ApplicationConfiguration {
   APPLICATION_NAME: String
   BIRTH: Birth
   COUNTRY_LOGO: CountryLogo
+  LOGIN_BACKGROUND: LoginBackground
   CURRENCY: Currency
   DEATH: Death
   FIELD_AGENT_AUDIT_LOCATIONS: String
