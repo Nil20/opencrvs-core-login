@@ -21,11 +21,32 @@ export interface ICountryLogo {
   fileName: string
   file: string
 }
-export interface ICountryBackground {
-  backgroundColor: string
-  backgroundImage: string
-  imageFit: FILL | TILE
+// export interface ICountryBackground {
+//   backgroundColor: string
+//   backgroundImage: string
+//   imageFit: 'FILL' | 'TILE'
+// }
+// export interface ILoginBackground {
+//   backgroundColor: string
+//   backgroundImage: string
+//   imageFit: string
+// }
+// export interface IApplicationConfig {
+//   APPLICATION_NAME: string
+//   COUNTRY: string
+//   COUNTRY_LOGO: ICountryLogo
+//   SENTRY: string
+//   LOGROCKET: string
+//   COUNTRY_BACKGROUND: ICountryBackground
+//   LOGIN_BACKGROUND: ILoginBackground
+// }
+
+type ICountryBackground = {
+  backgroundColor: string // hex value
+  backgroundImage: string //base64 string
+  imageFit: 'FILL' | 'TILE'
 }
+
 export interface ILoginBackground {
   backgroundColor: string
   backgroundImage: string
@@ -37,8 +58,8 @@ export interface IApplicationConfig {
   COUNTRY_LOGO: ICountryLogo
   SENTRY: string
   LOGROCKET: string
-  COUNTRY_BACKGROUND: ICountryBackground
   LOGIN_BACKGROUND: ILoginBackground
+  COUNTRY_BACKGROUND: ICountryBackground
 }
 
 export interface IApplicationConfigResponse {

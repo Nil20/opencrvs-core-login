@@ -10,8 +10,14 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+import { getTheme, Spinner } from '@login/../../components/lib'
+import {
+  selectCountryBackground,
+  selectCountryLogo
+} from '@login/login/selectors'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { RouteComponentProps } from 'react-router'
 import styled from 'styled-components'
 import { IPage } from '../Page'
 
@@ -38,6 +44,45 @@ export function usePersistentCountryBackground() {
   const [offlineBackground, setOfflineBackground] = React.useState(
     localStorage.getItem('country-background') ?? ''
   )
-  //   const background = useSelector(selectC)
-  //   console.log(localStorage)
+  const background = useSelector(selectCountryBackground)
+  if (background && background !== offlineBackground) {
+    setOfflineBackground(background)
+    localStorage.setItem('country-background', background)
+  }
+  return offlineBackground
+}
+
+export function usePersistentCountryLogo() {
+  const [offlineLogo, setOfflineLogo] = React.useState(
+    localStorage.getItem('country-logo') ?? ''
+  )
+  const logo = useSelector(selectCountryLogo)
+  if (logo && logo !== offlineLogo) {
+    setOfflineLogo(logo)
+    localStorage.setItem('country-logo', logo)
+  }
+  return offlineLogo
+}
+
+export class LoginBackground extends React.Component<
+  IPage,
+  RouteComponentProps<{}>
+> {
+  render() {
+    const { children, submitting } = this.props
+    return (
+      <div>
+        <StyledPage {...this.props}>
+          {submitting ? (
+            <Spinner
+              id="login-submitting-spinner"
+              baseColor={getTheme().colors.white}
+            />
+          ) : (
+            children
+          )}
+        </StyledPage>
+      </div>
+    )
+  }
 }
