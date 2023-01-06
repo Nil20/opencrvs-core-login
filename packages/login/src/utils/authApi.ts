@@ -21,6 +21,11 @@ export interface ICountryLogo {
   fileName: string
   file: string
 }
+export interface ICountryBackground {
+  backgroundColor: string
+  backgroundImage: string
+  imageFit: FILL | TILE
+}
 export interface ILoginBackground {
   backgroundColor: string
   backgroundImage: string
@@ -32,6 +37,7 @@ export interface IApplicationConfig {
   COUNTRY_LOGO: ICountryLogo
   SENTRY: string
   LOGROCKET: string
+  COUNTRY_BACKGROUND: ICountryBackground
   LOGIN_BACKGROUND: ILoginBackground
 }
 
