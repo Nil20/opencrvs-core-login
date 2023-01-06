@@ -55,6 +55,7 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
     "license-check-and-add": "^3.0.3",
     "opener": "^1.5.1",
     "patch-package": "^6.1.2",

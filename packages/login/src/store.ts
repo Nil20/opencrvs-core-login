@@ -19,13 +19,7 @@ import {
   StoreEnhancer
 } from 'redux'
 import { createBrowserHistory } from 'history'
-import {
-  combineReducers,
-  install,
-  StoreCreator,
-  getModel,
-  LoopReducer
-} from 'redux-loop'
+import { combineReducers, install, StoreCreator, getModel } from 'redux-loop'
 import {
   connectRouter,
   routerMiddleware,
