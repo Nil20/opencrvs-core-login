@@ -47,6 +47,12 @@ export interface ICurrency {
   languagesAndCountry: string[]
 }
 
+export interface ILoginBackground {
+  backgroundImage?: string
+  backgroundColor?: string
+  imageFit?: string
+}
+
 export interface IApplicationConfig {
   APPLICATION_NAME: string
   BIRTH: {
@@ -75,6 +81,7 @@ export interface IApplicationConfig {
   NID_NUMBER_PATTERN: RegExp
   ADDRESSES: number
   ADMIN_LEVELS: number
+  LOGIN_BACKGROUND: ILoginBackground
 }
 export interface IApplicationConfigResponse {
   config: IApplicationConfig
