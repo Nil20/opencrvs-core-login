@@ -36,6 +36,7 @@ import {
   selectCountryLogo
 } from '@login/login/selectors'
 import * as actions from '@login/login/actions'
+import { usePersistentCountryLogo } from '@login/common/LoginBackground/LoginBackground'
 
 export const Container = styled.div`
   position: relative;
@@ -201,18 +202,6 @@ const Password = injectIntl((props: Props) => {
     </Field>
   )
 })
-
-function usePersistentCountryLogo() {
-  const [offlineLogo, setOfflineLogo] = React.useState(
-    localStorage.getItem('country-logo') ?? ''
-  )
-  const logo = useSelector(selectCountryLogo)
-  if (logo && logo !== offlineLogo) {
-    setOfflineLogo(logo)
-    localStorage.setItem('country-logo', logo)
-  }
-  return offlineLogo
-}
 
 export function StepOneForm({
   intl,
