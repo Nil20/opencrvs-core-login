@@ -14,16 +14,14 @@ import { defineMessages, MessageDescriptor } from 'react-intl'
 interface IConfigMessages
   extends Record<string | number | symbol, MessageDescriptor> {
   applicationSettings: MessageDescriptor
-  advancedSearch: MessageDescriptor
-  advancedSearchInstruction: MessageDescriptor
   vsexport: MessageDescriptor
   vitalStatisticsExport: MessageDescriptor
   export: MessageDescriptor
-  vsEmptyStateText: MessageDescriptor
   applicationNameChangeMessage: MessageDescriptor
-  applicationNameChangeNotification: MessageDescriptor
   govtLogoChangeMessage: MessageDescriptor
   govtLogoChangeNotification: MessageDescriptor
+  backgroundImageChangeNotification: MessageDescriptor
+  backgroundImageFileLimitError: MessageDescriptor
   govtLogoChangeError: MessageDescriptor
   govtLogoFileLimitError: MessageDescriptor
   applicationConfigChangeError: MessageDescriptor
@@ -38,16 +36,12 @@ interface IConfigMessages
   birthDefaultTempDesc: MessageDescriptor
   eventUpdatedTempDesc: MessageDescriptor
   deathDefaultTempDesc: MessageDescriptor
-  certificateUploading: MessageDescriptor
-  certificateUpdated: MessageDescriptor
-  certificateValidationError: MessageDescriptor
-  uploadCertificateDialogTitle: MessageDescriptor
-  uploadCertificateDialogDescription: MessageDescriptor
-  uploadCertificateDialogConfirm: MessageDescriptor
-  uploadCertificateDialogCancel: MessageDescriptor
   listDetailsQsn: MessageDescriptor
   applicationNameLabel: MessageDescriptor
   govermentLogoLabel: MessageDescriptor
+  loginBackgroundLabel: MessageDescriptor
+  loginImageText: MessageDescriptor
+  backgroundImageError: MessageDescriptor
   currencyLabel: MessageDescriptor
   applicationCurrencyChangeNotification: MessageDescriptor
   applicationBirthRegTargetChangeNotification: MessageDescriptor
@@ -84,9 +78,10 @@ interface IConfigMessages
   withinLegallySpecifiedTimeLabel: MessageDescriptor
   generalTabTitle: MessageDescriptor
   birthTabTitle: MessageDescriptor
-  birthTabTitleExport: MessageDescriptor
   deathTabTitle: MessageDescriptor
-  deathTabTitleExport: MessageDescriptor
+  imageTabTitle: MessageDescriptor
+  colourTabTitle: MessageDescriptor
+  colourTabText: MessageDescriptor
   registrationTimePeriodsGroupTitle: MessageDescriptor
   registrationFeesGroupTitle: MessageDescriptor
   eventTargetInputLabel: MessageDescriptor
@@ -95,13 +90,6 @@ interface IConfigMessages
   testNumber: MessageDescriptor
   validExample: MessageDescriptor
   invalidExample: MessageDescriptor
-  informantNotifications: MessageDescriptor
-  informantNotificationSubtitle: MessageDescriptor
-  inProgressSMS: MessageDescriptor
-  declarationSMS: MessageDescriptor
-  registrationSMS: MessageDescriptor
-  rejectionSMS: MessageDescriptor
-  informantNotificationUpdatingMessage: MessageDescriptor
 }
 
 const messagesToDefine: IConfigMessages = {
@@ -109,17 +97,6 @@ const messagesToDefine: IConfigMessages = {
     id: 'config.application.settings',
     defaultMessage: 'Application',
     description: 'Link Text for Config Application Settings'
-  },
-  advancedSearch: {
-    id: 'config.advanced.search',
-    defaultMessage: 'Advanced Search',
-    description: 'This is used for the advanced search'
-  },
-  advancedSearchInstruction: {
-    id: 'config.advanced.search.instruction',
-    defaultMessage:
-      'Select the options to build an advanced search. A minimum of two search parameters is required.',
-    description: 'This is used for the advanced search'
   },
   vsexport: {
     id: 'config.application.vsexport',
@@ -164,10 +141,25 @@ const messagesToDefine: IConfigMessages = {
       'Upload the Government logo to be used on the login and form declaration. Note certificate logo is uploaded as part of the certificate template.',
     description: 'Message for government logo change modal'
   },
+  backgroundImageError: {
+    id: 'config.application.backgroundImageError',
+    defaultMessage: 'Unable to change image. Please try again.',
+    description: 'Error message for background image change'
+  },
   govtLogoChangeNotification: {
     id: 'config.application.govtLogoChangeNotification',
     defaultMessage: 'Government logo updated',
     description: 'Message for government logo change notification'
+  },
+  backgroundImageChangeNotification: {
+    id: 'config.application.backgroundImageChangeNotification',
+    defaultMessage: 'Background image updated',
+    description: 'Message for background image change notification'
+  },
+  backgroundImageFileLimitError: {
+    id: 'config.application.backgroundImageFileLimitError',
+    defaultMessage: 'Background image file must be less than 2mb',
+    description: 'Error message for large Background file'
   },
   govtLogoFileLimitError: {
     id: 'config.application.govtLogoFileLimitError',
@@ -286,6 +278,17 @@ const messagesToDefine: IConfigMessages = {
     id: 'config.application.govermentLogoLabel',
     defaultMessage: 'Government logo',
     description: 'Government logo config label'
+  },
+  loginBackgroundLabel: {
+    id: 'config.application.loginBackgroundLabel',
+    defaultMessage: 'Login Background',
+    description: 'Login Background config label'
+  },
+  loginImageText: {
+    id: 'config.application.loginImageText',
+    defaultMessage:
+      'Upload an image and set how you would like it to display in the background',
+    description: 'Login Image config label'
   },
   currencyLabel: {
     id: 'config.application.currencyLabel',
@@ -456,6 +459,21 @@ const messagesToDefine: IConfigMessages = {
     defaultMessage: 'Death',
     description: 'The title for death tab'
   },
+  imageTabTitle: {
+    id: 'config.application.imageTabTitle',
+    defaultMessage: 'Image',
+    description: 'The title for image tab'
+  },
+  colourTabTitle: {
+    id: 'config.application.colourTabTitle',
+    defaultMessage: 'Colour',
+    description: 'The title for colour tab'
+  },
+  colourTabText: {
+    id: 'config.application.colourTabText',
+    defaultMessage: 'Hex code',
+    description: 'The title for colour tab text'
+  },
   deathTabTitleExport: {
     id: 'config.application.deathTabTitleExport',
     defaultMessage: 'Deaths',
@@ -527,42 +545,6 @@ const messagesToDefine: IConfigMessages = {
     id: 'config.application.phoneNumberChangeNotification',
     defaultMessage: 'Phone Number Pattern Pattern of application updated',
     description: 'Message for phone number  Pattern change modal'
-  },
-  informantNotifications: {
-    id: 'config.informantNotification.title',
-    defaultMessage: 'Informant notifications',
-    description: 'The title for Informant notifications'
-  },
-  informantNotificationSubtitle: {
-    id: 'config.informantNotification.subtitle',
-    defaultMessage:
-      'Select the SMS notification to send to the Informant to keep them informed of the progress to their declaration. SMS copy can be updated from.... ',
-    description: 'Subtile for informant sms notification'
-  },
-  inProgressSMS: {
-    id: 'config.informantNotification.inProgressSMS',
-    defaultMessage: 'Notification sent to Office',
-    description: 'Title for informant inProgressSMS notification'
-  },
-  declarationSMS: {
-    id: 'config.informantNotification.declarationSMS',
-    defaultMessage: 'Declaration sent for review',
-    description: 'Title for informant declarationSMS notification'
-  },
-  registrationSMS: {
-    id: 'config.informantNotification.registrationSMS',
-    defaultMessage: 'Declaration registered',
-    description: 'Title for informant registrationSMS notification'
-  },
-  rejectionSMS: {
-    id: 'config.informantNotification.rejectionSMS',
-    defaultMessage: 'Declaration rejected',
-    description: 'Title for informant rejectionSMS notification'
-  },
-  informantNotificationUpdatingMessage: {
-    id: 'config.informantNotification.success',
-    defaultMessage: 'Informant notifications updated',
-    description: 'Notification for informant update success'
   }
 }
 
