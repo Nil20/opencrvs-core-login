@@ -77,9 +77,13 @@ export const LoginBackground = () => {
     getOfflineData(store)
   )
 
+  console.log(offlineLoginConfiguration)
+
   const [loginBackgroundFilename, setBackgroundFilename] =
     React.useState(EMPTY_STRING)
-  const [hexValue, setHexValue] = React.useState(EMPTY_STRING)
+  const [hexValue, setHexValue] = React.useState(
+    offlineLoginConfiguration.config.LOGIN_BACKGROUND.backgroundColor
+  )
   const [isRequestVal, setRequestValid] = React.useState(false)
   const selectOptions = () => {
     const array = [
@@ -219,7 +223,7 @@ export const LoginBackground = () => {
         }
         value={
           !offlineLoginConfiguration.config.LOGIN_BACKGROUND ? (
-            <Box id="Box" color={'#FFF'}></Box>
+            <Box id="Box" color={hexValue}></Box>
           ) : (
             <>
               {offlineLoginConfiguration.config.LOGIN_BACKGROUND

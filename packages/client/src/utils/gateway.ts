@@ -215,6 +215,7 @@ export type ApplicationConfiguration = {
   EXTERNAL_VALIDATION_WORKQUEUE?: Maybe<Scalars['Boolean']>
   FIELD_AGENT_AUDIT_LOCATIONS?: Maybe<Scalars['String']>
   HIDE_EVENT_REGISTER_INFORMATION?: Maybe<Scalars['Boolean']>
+  LOGIN_BACKGROUND?: Maybe<LoginBackground>
   NID_NUMBER_PATTERN?: Maybe<Scalars['String']>
   PHONE_NUMBER_PATTERN?: Maybe<Scalars['String']>
 }
@@ -230,6 +231,7 @@ export type ApplicationConfigurationInput = {
   EXTERNAL_VALIDATION_WORKQUEUE?: InputMaybe<Scalars['Boolean']>
   FIELD_AGENT_AUDIT_LOCATIONS?: InputMaybe<Scalars['String']>
   HIDE_EVENT_REGISTER_INFORMATION?: InputMaybe<Scalars['Boolean']>
+  LOGIN_BACKGROUND_INPUT?: InputMaybe<LoginBackgroundInput>
   NID_NUMBER_PATTERN?: InputMaybe<Scalars['String']>
   PHONE_NUMBER_PATTERN?: InputMaybe<Scalars['String']>
 }
@@ -977,6 +979,11 @@ export type IdentityType = {
   type?: Maybe<IdentityIdType>
 }
 
+export enum ImageFit {
+  Fill = 'FILL',
+  Tile = 'TILE'
+}
+
 export enum InformantType {
   Brother = 'BROTHER',
   Daughter = 'DAUGHTER',
@@ -1079,6 +1086,19 @@ export type LocationWiseEstimationMetric = {
   within1Year: Scalars['Int']
   within5Years: Scalars['Int']
   withinTarget: Scalars['Int']
+}
+
+export type LoginBackground = {
+  __typename?: 'LoginBackground'
+  backgroundColor?: Maybe<Scalars['String']>
+  backgroundImage?: Maybe<Scalars['String']>
+  imageFit?: Maybe<ImageFit>
+}
+
+export type LoginBackgroundInput = {
+  backgroundColor?: InputMaybe<Scalars['String']>
+  backgroundImage?: InputMaybe<Scalars['String']>
+  imageFit?: InputMaybe<ImageFit>
 }
 
 export enum MannerOfDeath {
@@ -5581,6 +5601,12 @@ export type UpdateApplicationConfigMutation = {
     HIDE_EVENT_REGISTER_INFORMATION?: boolean | null
     ADDRESSES?: number | null
     ADMIN_LEVELS?: number | null
+    LOGIN_BACKGROUND?: {
+      __typename?: 'LoginBackground'
+      backgroundColor?: string | null
+      backgroundImage?: string | null
+      imageFit?: ImageFit | null
+    } | null
     COUNTRY_LOGO?: {
       __typename?: 'CountryLogo'
       fileName?: string | null
