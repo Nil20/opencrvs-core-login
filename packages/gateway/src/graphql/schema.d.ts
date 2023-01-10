@@ -614,7 +614,7 @@ export interface GQLApplicationConfigurationInput {
   APPLICATION_NAME?: string
   BIRTH?: GQLBirthInput
   COUNTRY_LOGO?: GQLCountryLogoInput
-  LOGIN_BACKGROUND_INPUT?: GQLLoginBackgroundInput
+  LOGIN_BACKGROUND?: GQLLoginBackgroundInput
   CURRENCY?: GQLCurrencyInput
   DEATH?: GQLDeathInput
   FIELD_AGENT_AUDIT_LOCATIONS?: string

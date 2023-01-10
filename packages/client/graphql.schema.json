@@ -2090,7 +2090,7 @@
             "deprecationReason": null
           },
           {
-            "name": "LOGIN_BACKGROUND_INPUT",
+            "name": "LOGIN_BACKGROUND",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",

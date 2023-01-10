@@ -118,7 +118,7 @@ input ApplicationConfigurationInput {
   APPLICATION_NAME: String
   BIRTH: BirthInput
   COUNTRY_LOGO: CountryLogoInput
-  LOGIN_BACKGROUND_INPUT: LoginBackgroundInput
+  LOGIN_BACKGROUND: LoginBackgroundInput
   CURRENCY: CurrencyInput
   DEATH: DeathInput
   FIELD_AGENT_AUDIT_LOCATIONS: String

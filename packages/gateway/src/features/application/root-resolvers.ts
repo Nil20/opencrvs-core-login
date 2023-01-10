@@ -50,7 +50,7 @@ export const resolvers: GQLResolver = {
         ADDRESSES: applicationConfig.ADDRESSES as number,
         ADMIN_LEVELS: applicationConfig.ADMIN_LEVELS as number,
         LOGIN_BACKGROUND:
-          applicationConfig.LOGIN_BACKGROUND_INPUT as GQLLoginBackgroundInput
+          applicationConfig.LOGIN_BACKGROUND as GQLLoginBackgroundInput
       }
 
       const res = await fetch(
