@@ -36,7 +36,7 @@ import {
   selectCountryLogo
 } from '@login/login/selectors'
 import * as actions from '@login/login/actions'
-import { usePersistentCountryLogo } from '@login/common/LoginBackground/LoginBackground'
+// import { usePersistentCountryLogo } from '@login/common/LoginBackground/LoginBackground'
 
 export const Container = styled.div`
   position: relative;
@@ -213,7 +213,7 @@ export function StepOneForm({
   const dispatch = useDispatch()
   /* This might need to be converted into a state */
   const isOffline: boolean = navigator.onLine ? false : true
-  const logo = usePersistentCountryLogo()
+  // const logo = usePersistentCountryLogo()
   const appName = useSelector(selectApplicationName)
 
   React.useEffect(() => {
@@ -222,9 +222,9 @@ export function StepOneForm({
 
   return (
     <Container id="login-step-one-box">
-      <LogoContainer>
+      {/* <LogoContainer>
         <CountryLogo src={logo} />
-      </LogoContainer>
+      </LogoContainer> */}
       <Title>
         {submissionError && errorCode ? (
           <ErrorMessage>

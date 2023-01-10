@@ -77,8 +77,6 @@ export const LoginBackground = () => {
     getOfflineData(store)
   )
 
-  console.log(offlineLoginConfiguration)
-
   const [loginBackgroundFilename, setBackgroundFilename] =
     React.useState(EMPTY_STRING)
   const [hexValue, setHexValue] = React.useState(

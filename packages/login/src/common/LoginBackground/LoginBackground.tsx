@@ -9,24 +9,25 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-
-import { getTheme, Spinner } from '@login/../../components/lib'
-import {
-  selectCountryBackground,
-  selectCountryLogo
-} from '@login/login/selectors'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { RouteComponentProps } from 'react-router'
+import * as React from 'react'
 import styled from 'styled-components'
-import { IPage } from '../Page'
+import { RouteComponentProps } from 'react-router'
+import { IPage } from '@login/common/Page'
+import { Spinner } from '@opencrvs/components/lib/Spinner'
+import { getTheme } from '@opencrvs/components/lib/theme'
+import { connect } from 'react-redux'
+import { IStoreState } from '@login/store'
+import { selectCountryLogo } from '@login/login/selectors'
 
 const StyledPage = styled.div<IPage>`
-  background: ${({ theme }) => theme.colors.backgroundPrimary};
+  background: ${({ background, theme }) =>
+    background ? `#${background}` : theme.colors.backgroundPrimary};
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   ${({ submitting }) =>
     submitting && `justify-content: center; align-items: center;`}
   * {
@@ -34,45 +35,41 @@ const StyledPage = styled.div<IPage>`
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
   *:before,
   *:after {
     box-sizing: border-box;
   }
 `
 
-export function usePersistentCountryBackground() {
-  const [offlineBackground, setOfflineBackground] = React.useState(
-    localStorage.getItem('country-background') ?? ''
-  )
-  const background = useSelector(selectCountryBackground)
-  if (background && background !== offlineBackground) {
-    setOfflineBackground(background)
-    localStorage.setItem('country-background', background)
+type IProps = IPage &
+  RouteComponentProps<{}> & {
+    backgroundImage: string | undefined
+    backgroundColor: string | undefined
   }
-  return offlineBackground
-}
 
-export function usePersistentCountryLogo() {
-  const [offlineLogo, setOfflineLogo] = React.useState(
-    localStorage.getItem('country-logo') ?? ''
-  )
-  const logo = useSelector(selectCountryLogo)
-  if (logo && logo !== offlineLogo) {
-    setOfflineLogo(logo)
-    localStorage.setItem('country-logo', logo)
-  }
-  return offlineLogo
-}
+// export function usePersistentCountryLogo() {
+//   const [offlineLogo, setOfflineLogo] = React.useState(
+//     localStorage.getItem('country-logo') ?? ''
+//   )
+//   const logo = useSelector(selectCountryLogo)
+//   if (logo && logo !== offlineLogo) {
+//     setOfflineLogo(logo)
+//     localStorage.setItem('country-logo', logo)
+//   }
+//   return offlineLogo
+// }
 
-export class LoginBackground extends React.Component<
-  IPage,
-  RouteComponentProps<{}>
-> {
+export class LoginBackgroundComponent extends React.Component<IProps> {
   render() {
-    const { children, submitting } = this.props
+    const { children, submitting, backgroundImage, backgroundColor } =
+      this.props
     return (
       <div>
-        <StyledPage {...this.props}>
+        <StyledPage
+          {...this.props}
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
           {submitting ? (
             <Spinner
               id="login-submitting-spinner"
@@ -85,4 +82,18 @@ export class LoginBackground extends React.Component<
       </div>
     )
   }
+}
+
+const mapStateToProps = (store: IStoreState) => {
+  return {
+    backgroundImage: store.login.config.LOGIN_BACKGROUND?.backgroundImage,
+    backgroundColor: store.login.config.LOGIN_BACKGROUND?.backgroundColor
+  }
+}
+
+export const LoginBackground = connect(mapStateToProps)(
+  LoginBackgroundComponent
+)
+function useSelector(selectCountryLogo: any) {
+  throw new Error('Function not implemented.')
 }
