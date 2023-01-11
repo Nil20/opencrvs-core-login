@@ -23,6 +23,7 @@ interface IStepOneFormMessages
   optionalLabel: MessageDescriptor
   fieldMissing: MessageDescriptor
   phoneNumberFormat: MessageDescriptor
+  stepOneLoginText: MessageDescriptor
 }
 
 const messagesToDefine: IStepOneFormMessages = {
@@ -78,6 +79,11 @@ const messagesToDefine: IStepOneFormMessages = {
     defaultMessage: 'Must be a valid 10 digit number that starts with 0(7|9)',
     description:
       'The error message that appears on phone numbers where the first character must be a 0'
+  },
+  stepOneLoginText: {
+    id: 'login.stepOneText',
+    defaultMessage: 'Login to Farajaland CRVS',
+    description: 'The instruction that appears in step one of the login form'
   }
 }
 

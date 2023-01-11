@@ -110,7 +110,7 @@ export const StyledButton = styled(LinkButton)`
   &:not([data-focus-visible-added]) {
     background: transparent;
     outline: none;
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
   }
   &:active:not([data-focus-visible-added]):enabled {
     outline: none;

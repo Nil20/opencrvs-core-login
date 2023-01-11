@@ -19,10 +19,43 @@ import { TextInput } from '@login/../../components/lib/TextInput'
 import { messages } from '@login/i18n/messages/views/stepOneForm'
 import { PasswordInput } from '@login/../../components/lib/PasswordInput'
 import styled from 'styled-components'
-import { FormApi, SubmissionErrors } from 'final-form'
+import { IAuthenticationData } from '@login/utils/authApi'
+import { CountryLogo } from '@login/../../components/lib/icons'
+import { Box, Toast } from '@login/../../components'
+import {
+  ActionWrapper,
+  FieldWrapper,
+  FormWrapper,
+  LogoContainer,
+  StyledButton,
+  StyledButtonWrapper
+} from './StepOneForm'
+import {
+  getErrorCode,
+  getSubmissionError,
+  getsubmitting,
+  usePersistentCountryLogo
+} from '@login/login/selectors'
+import { useDispatch, useSelector } from 'react-redux'
+import * as actions from '@login/login/actions'
+import { Button } from '@login/../../components/lib/Button'
+import { goToForgottenItemForm } from '@login/login/actions'
+import {
+  ERROR_CODE_FIELD_MISSING,
+  ERROR_CODE_FORBIDDEN_CREDENTIALS,
+  ERROR_CODE_INVALID_CREDENTIALS,
+  ERROR_CODE_PHONE_NUMBER_VALIDATE
+} from '@login/utils/authUtils'
 
 const usernameField = stepOneFields.username
 const passwordField = stepOneFields.password
+
+const StyledH2 = styled.h2`
+  ${({ theme }) => theme.fonts.h2};
+  font-weight: 400;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.grey600};
+`
 
 const Container = styled.div`
   position: relative;
@@ -67,54 +100,108 @@ const Password = () => {
   return (
     <Field name={passwordField.name}>
       {({ meta, input, ...otherProps }) => (
-        <InputField
-          {...passwordField}
-          {...otherProps}
-          touched={Boolean(meta.touched)}
-          label={intl.formatMessage(passwordField.label)}
-          optionalLabel={intl.formatMessage(messages.optionalLabel)}
-          ignoreMediaQuery
-          hideAsterisk
-        >
-          <PasswordInput
+        <>
+          <InputField
             {...passwordField}
-            {...input}
+            {...otherProps}
             touched={Boolean(meta.touched)}
-            error={Boolean(meta.error)}
+            label={intl.formatMessage(passwordField.label)}
+            optionalLabel={intl.formatMessage(messages.optionalLabel)}
             ignoreMediaQuery
-          />
-        </InputField>
+            hideAsterisk
+          >
+            <PasswordInput
+              {...passwordField}
+              {...input}
+              touched={Boolean(meta.touched)}
+              error={Boolean(meta.error)}
+              ignoreMediaQuery
+            />
+          </InputField>
+        </>
       )}
     </Field>
   )
 }
 
+const FORM_NAME = 'step-one'
+
 export function StepOneContainerNew() {
+  const submitting = useSelector(getsubmitting)
+  const errorCode = useSelector(getErrorCode)
+  const intl = useIntl()
+  const logo = usePersistentCountryLogo()
+  const dispatch = useDispatch()
+  const submissionError = useSelector(getSubmissionError)
+  const isOffline: boolean = navigator.onLine ? false : true
+
   return (
     <Container id="login-step-one-box">
-      <Form
-        onSubmit={function (
-          values: Record<string, any>,
-          form: FormApi<Record<string, any>, Partial<Record<string, any>>>,
-          callback?: ((errors?: SubmissionErrors) => void) | undefined
-        ): void | SubmissionErrors | Promise<SubmissionErrors> {
-          throw new Error('Function not implemented.')
-        }}
-      >
-        <UsernameInput />
-      </Form>
+      <Box id="box">
+        <LogoContainer>
+          <CountryLogo src={logo} />
+        </LogoContainer>
+        <Form
+          onSubmit={(values: IAuthenticationData) =>
+            dispatch(actions.authenticate(values))
+          }
+        >
+          {({ handleSubmit }) => (
+            <FormWrapper id={FORM_NAME} onSubmit={handleSubmit}>
+              <StyledH2>
+                {intl.formatMessage(messages.stepOneLoginText)}
+              </StyledH2>
 
-      <Form
-        onSubmit={function (
-          values: Record<string, any>,
-          form: FormApi<Record<string, any>, Partial<Record<string, any>>>,
-          callback?: ((errors?: SubmissionErrors) => void) | undefined
-        ): void | SubmissionErrors | Promise<SubmissionErrors> {
-          throw new Error('Function not implemented.')
-        }}
-      >
-        <Password />
-      </Form>
+              <FieldWrapper>
+                <Field name={usernameField.name} component={UsernameInput} />
+              </FieldWrapper>
+
+              <FieldWrapper>
+                <Field name={passwordField.name} component={Password} />
+              </FieldWrapper>
+
+              <ActionWrapper>
+                <Button
+                  id="login-mobile-submit"
+                  type="primary"
+                  loading={submitting}
+                >
+                  {intl.formatMessage(messages.submit)}
+                </Button>
+
+                <StyledButtonWrapper>
+                  <StyledButton
+                    id="forgot-password-button"
+                    type="button"
+                    onClick={() => dispatch(goToForgottenItemForm())}
+                  >
+                    {intl.formatMessage(messages.forgotPassword)}
+                  </StyledButton>
+                </StyledButtonWrapper>
+              </ActionWrapper>
+            </FormWrapper>
+          )}
+        </Form>
+      </Box>
+
+      {submissionError && errorCode ? (
+        <Toast type="error">
+          {errorCode === ERROR_CODE_FIELD_MISSING &&
+            intl.formatMessage(messages.fieldMissing)}
+          {errorCode === ERROR_CODE_INVALID_CREDENTIALS &&
+            intl.formatMessage(messages.submissionError)}
+          {errorCode === ERROR_CODE_FORBIDDEN_CREDENTIALS &&
+            intl.formatMessage(messages.forbiddenCredentialError)}
+          {errorCode === ERROR_CODE_PHONE_NUMBER_VALIDATE &&
+            intl.formatMessage(messages.phoneNumberFormat)}
+        </Toast>
+      ) : (
+        isOffline && (
+          <Toast type="error">
+            {intl.formatMessage(messages.networkError)}
+          </Toast>
+        )
+      )}
     </Container>
   )
 }
