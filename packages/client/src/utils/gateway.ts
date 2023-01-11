@@ -1997,6 +1997,32 @@ export type Role = {
   value?: Maybe<Scalars['String']>
 }
 
+export enum RoleType {
+  FieldAgent = 'FIELD_AGENT',
+  LocalRegistrar = 'LOCAL_REGISTRAR',
+  LocalSystemAdmin = 'LOCAL_SYSTEM_ADMIN',
+  NationalRegistrar = 'NATIONAL_REGISTRAR',
+  NationalSystemAdmin = 'NATIONAL_SYSTEM_ADMIN',
+  PerformanceManagement = 'PERFORMANCE_MANAGEMENT',
+  RegistrationAgent = 'REGISTRATION_AGENT'
+}
+
+export type SmsNotification = {
+  __typename?: 'SMSNotification'
+  createdAt: Scalars['String']
+  enabled: Scalars['Boolean']
+  id?: Maybe<Scalars['String']>
+  message: Scalars['String']
+  name: Scalars['String']
+  updatedAt: Scalars['String']
+}
+
+export type SmsNotificationInput = {
+  enabled: Scalars['Boolean']
+  id: Scalars['String']
+  name: Scalars['String']
+}
+
 export type SearchFieldAgentResponse = {
   __typename?: 'SearchFieldAgentResponse'
   avatar?: Maybe<Avatar>
@@ -5878,53 +5904,40 @@ export type DeleteSystemMutation = {
   } | null
 }
 
-export type CreateFormDatasetMutationVariables = Exact<{
-  formDataset: FormDatasetInput
+export type ToggleInformantSmsNotificationMutationVariables = Exact<{
+  smsNotifications?: InputMaybe<
+    Array<SmsNotificationInput> | SmsNotificationInput
+  >
 }>
 
-export type CreateFormDatasetMutation = {
+export type ToggleInformantSmsNotificationMutation = {
   __typename?: 'Mutation'
-  createFormDataset?: {
-    __typename?: 'FormDatasetResponse'
-    status: string
-    msg: string
-    data?: {
-      __typename?: 'FormDataset'
-      fileName: string
-      createdAt: string
-      _id?: string | null
-      options?: Array<{
-        __typename?: 'FormDatasetOption'
-        value: string
-        label?: Array<{
-          __typename?: 'FormDatasetOptionLabel'
-          lang: string
-          descriptor: {
-            __typename?: 'MesssageDescriptor'
-            id: string
-            defaultMessage: string
-          }
-        } | null> | null
-      }> | null
-    } | null
-  } | null
+  toggleInformantSMSNotification?: Array<{
+    __typename?: 'SMSNotification'
+    id?: string | null
+    name: string
+    enabled: boolean
+    message: string
+    createdAt: string
+    updatedAt: string
+  }> | null
 }
 
-export type GetVsExportsQueryVariables = Exact<{ [key: string]: never }>
+export type GetInformantSmsNotificationsQueryVariables = Exact<{
+  [key: string]: never
+}>
 
-export type GetVsExportsQuery = {
+export type GetInformantSmsNotificationsQuery = {
   __typename?: 'Query'
-  getVSExports?: {
-    __typename?: 'TotalVSExport'
-    results?: Array<{
-      __typename?: 'VSExport'
-      event: string
-      year: number
-      url: string
-      createdOn: string
-      fileSize: string
-    }> | null
-  } | null
+  informantSMSNotifications?: Array<{
+    __typename?: 'SMSNotification'
+    id?: string | null
+    name: string
+    enabled: boolean
+    message: string
+    createdAt: string
+    updatedAt: string
+  }> | null
 }
 
 export type GetTotalCorrectionsQueryVariables = Exact<{
@@ -6161,12 +6174,12 @@ export type GetRegistrationsListByFilterQuery = {
           delayed: number
           registrarPractitioner?: {
             __typename?: 'User'
-            id?: Scalars['ID']
+            id: string
             role: RoleType
             primaryOffice?: {
               __typename?: 'Location'
               name?: string | null
-              id?: string | null
+              id: string
             } | null
             name: Array<{
               __typename?: 'HumanName'
