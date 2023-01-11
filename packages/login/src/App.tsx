@@ -18,6 +18,7 @@ import { IntlContainer } from '@login/i18n/components/I18nContainer'
 import * as routes from '@login/navigation/routes'
 import { createStore, AppStore } from '@login/store'
 import { StepOneContainer } from '@login/views/StepOne/StepOneContainer'
+import { StepOneContainerNew } from './views/StepOne/StepOneContainerNew'
 import { StepTwoContainer } from '@login/views/StepTwo/StepTwoContainer'
 import { getTheme } from '@opencrvs/components/lib/theme'
 import * as React from 'react'
@@ -65,7 +66,7 @@ export class App extends React.Component<IAppProps> {
                     <Route exact path={routes.STEP_ONE}>
                       <LanguageSelect>
                         <LoginBackgroundContainer>
-                          <StepOneContainer />
+                          <StepOneContainerNew />
                         </LoginBackgroundContainer>
                       </LanguageSelect>
                     </Route>

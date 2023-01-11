@@ -10,13 +10,5 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { IStoreState } from '@login/store'
-import { useSelector } from 'react-redux'
-
-export function loginBackgroundParamState() {
-  return useSelector<IStoreState>((state) => {
-    const backgroundColor = state.login.config.LOGIN_BACKGROUND
-      ?.backgroundColor as string
-    return backgroundColor
-  })
-}
+import * as React from 'react'
+import { stepTwoFields } from './stepTwoFields'
