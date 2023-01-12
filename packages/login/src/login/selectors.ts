@@ -125,7 +125,7 @@ export const getErrorCode = (store: IStoreState): LoginState['errorCode'] =>
 export const getResentSMS = (store: IStoreState): LoginState['resentSMS'] =>
   getKey(store, 'resentSMS')
 
-export const getsubmitting = (store: IStoreState): LoginState['submitting'] =>
+export const getSubmitting = (store: IStoreState): LoginState['submitting'] =>
   getKey(store, 'submitting')
 
 export function selectCountryLogo(store: IStoreState) {

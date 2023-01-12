@@ -20,6 +20,7 @@ import { createStore, AppStore } from '@login/store'
 import { StepOneContainer } from '@login/views/StepOne/StepOneContainer'
 import { StepOneContainerNew } from './views/StepOne/StepOneContainerNew'
 import { StepTwoContainer } from '@login/views/StepTwo/StepTwoContainer'
+import { StepTwoContainerNew } from './views/StepTwo/StepTwoContainerNew'
 import { getTheme } from '@opencrvs/components/lib/theme'
 import * as React from 'react'
 import { History } from 'history'
@@ -72,7 +73,7 @@ export class App extends React.Component<IAppProps> {
                     </Route>
                     <Route exact path={routes.STEP_TWO}>
                       <LoginBackgroundContainer>
-                        <StepTwoContainer />
+                        <StepTwoContainerNew />
                       </LoginBackgroundContainer>
                     </Route>
                     <Route exact path={routes.FORGOTTEN_ITEM}>

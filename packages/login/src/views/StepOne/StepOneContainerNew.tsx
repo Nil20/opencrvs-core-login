@@ -33,7 +33,7 @@ import {
 import {
   getErrorCode,
   getSubmissionError,
-  getsubmitting,
+  getSubmitting,
   usePersistentCountryLogo
 } from '@login/login/selectors'
 import { useDispatch, useSelector } from 'react-redux'
@@ -127,7 +127,7 @@ const Password = () => {
 const FORM_NAME = 'step-one'
 
 export function StepOneContainerNew() {
-  const submitting = useSelector(getsubmitting)
+  const submitting = useSelector(getSubmitting)
   const errorCode = useSelector(getErrorCode)
   const intl = useIntl()
   const logo = usePersistentCountryLogo()

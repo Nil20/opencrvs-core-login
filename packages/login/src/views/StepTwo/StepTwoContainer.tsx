@@ -23,7 +23,7 @@ import * as actions from '@login/login/actions'
 import {
   getSubmissionError,
   getResentSMS,
-  getsubmitting,
+  getSubmitting,
   selectApplicationName
 } from '@login/login/selectors'
 
@@ -34,7 +34,7 @@ const mapStateToProps = (store: IStoreState): IProps => {
     formId: FORM_NAME,
     submissionError: getSubmissionError(store),
     resentSMS: getResentSMS(store),
-    submitting: getsubmitting(store),
+    submitting: getSubmitting(store),
     stepOneDetails: { mobile: store.login.authenticationDetails.mobile },
     applicationName: selectApplicationName(store)
   }
