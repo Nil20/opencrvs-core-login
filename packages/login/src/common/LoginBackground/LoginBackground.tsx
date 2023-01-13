@@ -86,6 +86,7 @@ export class LoginBackgroundComponent extends React.Component<IProps> {
 
 const mapStateToProps = (store: IStoreState) => {
   return {
+    submitting: store.login.submitting,
     backgroundImage: store.login.config.LOGIN_BACKGROUND?.backgroundImage,
     backgroundColor: store.login.config.LOGIN_BACKGROUND?.backgroundColor
   }
@@ -94,6 +95,3 @@ const mapStateToProps = (store: IStoreState) => {
 export const LoginBackground = connect(mapStateToProps)(
   LoginBackgroundComponent
 )
-function useSelector(selectCountryLogo: any) {
-  throw new Error('Function not implemented.')
-}

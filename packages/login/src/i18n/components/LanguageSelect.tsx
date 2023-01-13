@@ -29,7 +29,7 @@ const SelectContainer = styled.div`
   display: flex;
   justify-content: end;
   padding: 24px 24px 8px;
-  background: ${({ theme }) => theme.colors.backgroundPrimary};
+  background: transparent;
 `
 
 function useLanguage(selectedLanguage: string, paramLanguage: string | null) {

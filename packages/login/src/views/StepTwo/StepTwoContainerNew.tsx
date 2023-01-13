@@ -37,13 +37,14 @@ import {
   getStepOneDetails,
   getSubmissionError,
   getSubmitting,
+  selectCountryBackground,
   usePersistentCountryLogo
 } from '@login/login/selectors'
 import { IVerifyCodeNumbers } from '@login/login/actions'
 import * as actions from '@login/login/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { PrimaryButton } from '@login/../../components/lib/buttons'
-import { ceil } from 'lodash'
+import { ceil, concat } from 'lodash'
 
 const verificationCode = stepTwoFields.code
 
@@ -54,9 +55,10 @@ const StyledH2 = styled.h2`
   color: ${({ theme }) => theme.colors.grey600};
 `
 
-const Container = styled.div`
+const Container = styled.div<{ background: string }>`
+  ${({ background }) => `background-color: ${background}`};
   position: relative;
-  height: auto;
+  height: 100vh;
   padding: 0px;
   margin: 0px auto;
   width: 500px;
@@ -113,9 +115,12 @@ export function StepTwoContainerNew() {
     ),
     '*'.repeat(stepOneDetails.mobile.length - startForm - endBefore)
   )
+  const backgroundDetails = useSelector(selectCountryBackground)?.toString()
+  const hash = '#'
+  const concatHash = concat(hash + backgroundDetails).toString()
 
   return (
-    <Container id="step-two-form">
+    <Container id="step-two-form" background={concatHash}>
       <Box id="box">
         <Title>
           <LogoContainer>

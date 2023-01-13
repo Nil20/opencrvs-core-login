@@ -21,7 +21,8 @@ import { PasswordInput } from '@login/../../components/lib/PasswordInput'
 import styled from 'styled-components'
 import { IAuthenticationData } from '@login/utils/authApi'
 import { CountryLogo } from '@login/../../components/lib/icons'
-import { Box, Toast } from '@login/../../components'
+import { Toast } from '@login/../../components'
+import { Box } from '@login/../../components/lib/Box'
 import {
   ActionWrapper,
   FieldWrapper,
@@ -34,6 +35,7 @@ import {
   getErrorCode,
   getSubmissionError,
   getSubmitting,
+  selectCountryBackground,
   usePersistentCountryLogo
 } from '@login/login/selectors'
 import { useDispatch, useSelector } from 'react-redux'
@@ -46,24 +48,27 @@ import {
   ERROR_CODE_INVALID_CREDENTIALS,
   ERROR_CODE_PHONE_NUMBER_VALIDATE
 } from '@login/utils/authUtils'
+import { concat } from 'lodash'
 
 const usernameField = stepOneFields.username
 const passwordField = stepOneFields.password
 
-const StyledH2 = styled.h2`
-  ${({ theme }) => theme.fonts.h2};
-  font-weight: 400;
-  text-align: center;
-  color: ${({ theme }) => theme.colors.grey600};
-`
-
-const Container = styled.div`
-  position: relative;
-  height: auto;
-  padding: 0px;
-  margin: 0px auto;
-  width: 500px;
-`
+const S = {
+  StyledH2: styled.h2`
+    ${({ theme }) => theme.fonts.h2};
+    font-weight: 400;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.grey600};
+  `,
+  Container: styled.div<{ background: string }>`
+    ${({ background }) => `background-color: ${background}`};
+    position: relative;
+    height: 100vh;
+    padding: 0px;
+    margin: 0px auto;
+    width: 500px;
+  `
+}
 
 const UsernameInput = () => {
   const intl = useIntl()
@@ -134,9 +139,13 @@ export function StepOneContainerNew() {
   const dispatch = useDispatch()
   const submissionError = useSelector(getSubmissionError)
   const isOffline: boolean = navigator.onLine ? false : true
+  const backgroundDetails = useSelector(selectCountryBackground)?.toString()
+  const hash = '#'
+  const concatHash = concat(hash + backgroundDetails).toString()
 
   return (
-    <Container id="login-step-one-box">
+    <S.Container id="step-one-form" background={concatHash}>
+      {console.log(concatHash)}
       <Box id="box">
         <LogoContainer>
           <CountryLogo src={logo} />
@@ -148,9 +157,9 @@ export function StepOneContainerNew() {
         >
           {({ handleSubmit }) => (
             <FormWrapper id={FORM_NAME} onSubmit={handleSubmit}>
-              <StyledH2>
+              <S.StyledH2>
                 {intl.formatMessage(messages.stepOneLoginText)}
-              </StyledH2>
+              </S.StyledH2>
 
               <FieldWrapper>
                 <Field name={usernameField.name} component={UsernameInput} />
@@ -183,7 +192,6 @@ export function StepOneContainerNew() {
           )}
         </Form>
       </Box>
-
       {submissionError && errorCode ? (
         <Toast type="error">
           {errorCode === ERROR_CODE_FIELD_MISSING &&
@@ -202,6 +210,6 @@ export function StepOneContainerNew() {
           </Toast>
         )
       )}
-    </Container>
+    </S.Container>
   )
 }
