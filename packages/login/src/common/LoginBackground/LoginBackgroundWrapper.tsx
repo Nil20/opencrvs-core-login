@@ -9,9 +9,61 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
+import { LanguageSelect } from '@login/i18n/components/LanguageSelect'
+import {
+  selectCountryBackground,
+  useImageToObjectFit
+} from '@login/login/selectors'
 import * as React from 'react'
+import { useSelector } from 'react-redux'
+import styled, { css } from 'styled-components'
 
 interface IPageProps {
   background?: string
   imageFitter?: string
+}
+
+const StyledPage = styled.div<IPageProps>`
+  min-height: 100vh;
+  width: 100%;
+  ${({ imageFitter, background, theme }) =>
+    imageFitter === 'TILE' && background
+      ? css`
+          background-image: url(${background});
+          background-repeat: no-repeat;
+          background-size: cover;
+        `
+      : css`
+          background: ${background
+            ? `#${background}`
+            : theme.colors.backgroundPrimary};
+        `};
+  * {
+    box-sizing: border-box;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+`
+
+export interface IProps {
+  children: React.ReactNode
+}
+
+export function LoginBackgroundWrapper({ children }: IProps) {
+  // const countryBackground = usePersistentCountryBackground()
+  const countryBackground = useSelector(selectCountryBackground)
+  const fit = useImageToObjectFit()
+  return (
+    <React.Fragment>
+      <StyledPage background={countryBackground} imageFitter={fit}>
+        <LanguageSelect />
+        {children}
+      </StyledPage>
+    </React.Fragment>
+  )
 }

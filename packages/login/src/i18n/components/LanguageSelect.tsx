@@ -22,7 +22,7 @@ import { getLanguages, getLanguage } from '@login/i18n/selectors'
 import { useHistory, useLocation } from 'react-router'
 
 type IProps = {
-  children: React.ReactNode
+  background: string
 }
 
 const SelectContainer = styled.div`
@@ -55,7 +55,7 @@ function useLanguage(selectedLanguage: string, paramLanguage: string | null) {
   return [languageOptions, onChange] as const
 }
 
-export function LanguageSelect({ children }: IProps) {
+export function LanguageSelect() {
   const paramLanguage = useSearchQuery('lang')
   const selectedLanguage = useSelector(getLanguage)
   const [languageOptions, onLanguageChange] = useLanguage(
@@ -74,7 +74,6 @@ export function LanguageSelect({ children }: IProps) {
           />
         </SelectContainer>
       )}
-      {children}
     </>
   )
 }

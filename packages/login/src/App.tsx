@@ -21,7 +21,7 @@ import { StepOneContainer } from '@login/views/StepOne/StepOneContainer'
 import { StepOneContainerNew } from './views/StepOne/StepOneContainerNew'
 import { StepTwoContainer } from '@login/views/StepTwo/StepTwoContainer'
 import { StepTwoContainerNew } from './views/StepTwo/StepTwoContainerNew'
-import { getTheme } from '@opencrvs/components/lib/theme'
+import { getTheme } from '@opencrvs/components'
 import * as React from 'react'
 import { History } from 'history'
 import { Provider } from 'react-redux'
@@ -35,7 +35,7 @@ import { RecoveryCodeEntry } from './views/resetCredentialsForm/recoveryCodeEntr
 import { SecurityQuestion } from './views/resetCredentialsForm/securityQuestionForm'
 import { UpdatePassword } from './views/resetCredentialsForm/updatePasswordForm'
 import { Page } from './Page'
-import { LanguageSelect } from './i18n/components/LanguageSelect'
+import { LoginBackgroundWrapper } from './common/LoginBackground/LoginBackgroundWrapper'
 
 export const { store, history } = createStore()
 
@@ -65,16 +65,14 @@ export class App extends React.Component<IAppProps> {
                 <Page>
                   <Switch>
                     <Route exact path={routes.STEP_ONE}>
-                      <LanguageSelect>
-                        <LoginBackgroundContainer>
-                          <StepOneContainerNew />
-                        </LoginBackgroundContainer>
-                      </LanguageSelect>
+                      <LoginBackgroundWrapper>
+                        <StepOneContainerNew />
+                      </LoginBackgroundWrapper>
                     </Route>
                     <Route exact path={routes.STEP_TWO}>
-                      <LoginBackgroundContainer>
+                      <LoginBackgroundWrapper>
                         <StepTwoContainerNew />
-                      </LoginBackgroundContainer>
+                      </LoginBackgroundWrapper>
                     </Route>
                     <Route exact path={routes.FORGOTTEN_ITEM}>
                       <PageContainer>

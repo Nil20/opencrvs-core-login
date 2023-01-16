@@ -60,8 +60,7 @@ const S = {
     text-align: center;
     color: ${({ theme }) => theme.colors.grey600};
   `,
-  Container: styled.div<{ background: string }>`
-    ${({ background }) => `background-color: ${background}`};
+  Container: styled.div`
     position: relative;
     height: 100vh;
     padding: 0px;
@@ -69,6 +68,9 @@ const S = {
     width: 500px;
   `
 }
+
+// <{ background: string }>
+//     ${({ background }) => `background-color: ${background}`};
 
 const UsernameInput = () => {
   const intl = useIntl()
@@ -144,7 +146,7 @@ export function StepOneContainerNew() {
   const concatHash = concat(hash + backgroundDetails).toString()
 
   return (
-    <S.Container id="step-one-form" background={concatHash}>
+    <S.Container id="step-one-form">
       {console.log(concatHash)}
       <Box id="box">
         <LogoContainer>
